@@ -24,11 +24,11 @@ The goals / steps of this project are the following:
 #### 1. Submission includes all required files and can be used to run the simulator in autonomous mode
 
 My project includes the following files:
-* model.py containing the script to create and train the model
-* drive.py for driving the car in autonomous mode
-* model.h5 containing a trained convolution neural network 
-* writeup_report.md summarizing the results
-* output.mp4 which shows a video if the autonomously driven car simulator using the above saved model
+* [model.py](https://github.com/vsagarmb/CarND-Behavioral-Cloning-P4/blob/master/model.py) containing the script to create and train the model
+* [drive.py](https://github.com/vsagarmb/CarND-Behavioral-Cloning-P4/blob/master/drive.py) for driving the car in autonomous mode
+* [model.h5](https://github.com/vsagarmb/CarND-Behavioral-Cloning-P4/blob/master/model.h5) containing a trained convolution neural network 
+* [writeup.md](https://github.com/vsagarmb/CarND-Behavioral-Cloning-P4/blob/master/writeup.md) summarizing the results
+* [output.mp4](https://github.com/vsagarmb/CarND-Behavioral-Cloning-P4/blob/master/output.mp4) which shows a video if the autonomously driven car simulator using the above saved model
 
 #### 2. Submission includes functional code
 Using the Udacity provided simulator and my drive.py file, the car can be driven autonomously around the track by executing 
