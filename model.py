@@ -33,6 +33,11 @@ def gather_training_data(images, measurements, log_path='./data/'):
         impath = log_path + 'IMG/' + tokens[-1]    
         
         image = cv2.imread(impath)
+        
+        if image is None:
+            print(impath)
+            continue
+        
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         images.append(image)
        
@@ -58,8 +63,6 @@ def gather_training_data(images, measurements, log_path='./data/'):
        
         measurements.append(measurement-0.2)
 
-        break
-
     return images, measurements
 
   
@@ -76,9 +79,6 @@ if __name__ == "__main__":
     images, measurements = gather_training_data(images, measurements, './data/run1/')
     images, measurements = gather_training_data(images, measurements, './data/run2/')
 
-    # Preprocess the data
-
-    
     # data marshalling
     X_train = np.array(images)
     y_train = np.array(measurements) 
@@ -107,3 +107,5 @@ if __name__ == "__main__":
     model.fit(X_train, y_train, validation_split=0.2, shuffle=True, epochs=7)
             
     model.save('model.h5')
+
+    print('Model Saved')
