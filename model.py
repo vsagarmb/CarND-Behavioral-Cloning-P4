@@ -12,10 +12,13 @@ import numpy as np
 import random
 
 images = []
-measurements = []
+angles = []
 
-def gather_training_data(images, measurements, log_path='./data/'):
-    
+def gather_training_data(images, angles, log_path='./data/'):
+    '''
+    This function reads the csv file at the given path and loads 
+    the images and the steering angles into the sample set. 
+    '''
     # first gather the default data
     with open(log_path + 'driving_log.csv') as csvfile:
         reader = csv.reader(csvfile)
@@ -41,7 +44,7 @@ def gather_training_data(images, measurements, log_path='./data/'):
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         images.append(image)
        
-        measurements.append(measurement)
+        angles.append(measurement)
 
         # Left Image
         tokens = line[1].split('\\')
@@ -51,7 +54,7 @@ def gather_training_data(images, measurements, log_path='./data/'):
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         images.append(image)
        
-        measurements.append(measurement+0.2)
+        angles.append(measurement+0.2)
 
         # Right Image
         tokens = line[2].split('\\')
@@ -61,9 +64,9 @@ def gather_training_data(images, measurements, log_path='./data/'):
         image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         images.append(image)
        
-        measurements.append(measurement-0.2)
+        angles.append(measurement-0.2)
 
-    return images, measurements
+    return images, angles
 
   
 ''' 
@@ -76,12 +79,12 @@ def gather_training_data(images, measurements, log_path='./data/'):
 if __name__ == "__main__":
     
     # Extract the data
-    images, measurements = gather_training_data(images, measurements, './data/run1/')
-    images, measurements = gather_training_data(images, measurements, './data/run2/')
+    images, angles = gather_training_data(images, angles, './data/run1/')
+    images, angles = gather_training_data(images, angles, './data/run2/')
 
     # data marshalling
     X_train = np.array(images)
-    y_train = np.array(measurements) 
+    y_train = np.array(angles) 
        
     #--------------------------- Neural Network Definition --------------------------------
     #-----This is based on the comm ai model with 2 additional fully connected layers -----
@@ -102,9 +105,9 @@ if __name__ == "__main__":
     model.add(Dense(10, activation='elu'))
     model.add(Dense(1))
 
-    # Compile and train
+    # Compile and Train
     model.compile(optimizer="adam", loss="mse")
-    model.fit(X_train, y_train, validation_split=0.2, shuffle=True, epochs=7)
+    model.fit(X_train, y_train, validation_split=0.2, shuffle=True, epochs=10)
             
     model.save('model.h5')
 
